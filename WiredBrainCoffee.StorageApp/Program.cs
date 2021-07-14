@@ -11,10 +11,29 @@ namespace WiredBrainCoffee.StorageApp
         {
             var employeeRepository = new SqlRepository<Employee>(new StorageAppDbContext());
             AddEmployees(employeeRepository);
+            AddManagers(employeeRepository);
             GetEmployeeById(employeeRepository);
+            WriteAllToConsole(employeeRepository);
 
             var organizationRepository = new ListRepository<Organization>();
             AddOrganizations(organizationRepository);
+            WriteAllToConsole(organizationRepository);
+        }
+
+        private static void AddManagers(IWriteRepository<Manager> managerRepository)
+        {
+            managerRepository.Add(new Manager { FirstName = "Sara" });
+            managerRepository.Add(new Manager { FirstName = "Henry" });
+            managerRepository.Save();
+        }
+
+        private static void WriteAllToConsole(IReadRepository<IEntity> repository)
+        {
+            var items = repository.GetAll();
+            foreach (var item in items)
+            {
+                Console.WriteLine(item);
+            }
         }
 
         private static void GetEmployeeById(IRepository<Employee> employeeRepository)
