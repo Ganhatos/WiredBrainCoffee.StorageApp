@@ -9,6 +9,11 @@ namespace WiredBrainCoffee.StorageApp.Repositories
     {
         private readonly List<T> _items = new();
 
+        public IEnumerable<T> GetAll()
+        {
+            return _items.ToList();
+        }
+
         public T GetById(int id)
         {
             return _items.Single(item => item.Id == id);
@@ -27,10 +32,7 @@ namespace WiredBrainCoffee.StorageApp.Repositories
 
         public void Save()
         {
-            foreach (var item in _items)
-            {
-                Console.WriteLine(item);
-            }
+            //Everything is saved already in the List<T>
         }
     }
 }
